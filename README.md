@@ -1,6 +1,28 @@
 # Docker Adminer
 
-This repo contains dockerfile for image with adminer supporting simultaneous requests (webserver Apache exposed on port 80).
+This repo contains dockerfile for image with Adminer supporting simultaneous requests (webserver Apache exposed on port 80).
+
+## Usage
+
+Example docker-compose.yml:
+
+```
+version: "3.7"
+
+services:
+  adminer:
+    build: .
+    image: zanne/adminer
+    ports:
+      - 127.0.0.1:8080:80
+    volumes:
+      - adminer-sessions:/tmp
+
+volumes:
+  adminer-sessions: {}
+```
+
+This config ensures persistent login and binds Adminer to port 8080 (accessible only from host OS).
 
 ## Docker Image
 
