@@ -42,12 +42,13 @@ RUN apk --update \
     sed -i 's/memory_limit = .*/memory_limit = 128M/' /etc/php7/php.ini && \
     sed -i 's/post_max_size = .*/post_max_size = 128M/' /etc/php7/php.ini && \
     sed -i 's/upload_max_filesize = .*/upload_max_filesize = 128M/' /etc/php7/php.ini && \
+    sed -i 's/memory_limit = 128M/memory_limit = 1024M/' /etc/php7/php.ini && \
     sed -i "s/^;date.timezone =$/date.timezone = \"Europe\/Prague\"/" /etc/php7/php.ini && \
     # logging to stdout
     ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
     ln -sf /proc/self/fd/1 /var/log/apache2/error.log && \
     # adminer download
-    curl -L -o /var/www/html/index.php https://github.com/vrana/adminer/releases/download/v4.7.2/adminer-4.7.2.php
+    curl -L -o /var/www/html/index.php https://github.com/vrana/adminer/releases/download/v4.7.5/adminer-4.7.5.php
 
 EXPOSE 80
 
