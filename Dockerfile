@@ -1,31 +1,27 @@
-FROM alpine:3.10
+FROM alpine:3.17
 
 # Setup apache and php
 RUN apk --update \
     add apache2 \
     curl \
-    php7-apache2 \
-    php7-bcmath \
-    php7-bz2 \
-    php7-calendar \
-    php7-ctype \
-    php7-curl \
-    php7-dom \
-    php7-gd \
-    php7-iconv \
-    php7-json \
-    php7-mbstring \
-    php7-mcrypt \
-    php7-mysqlnd \
-    php7-openssl \
-    php7-pdo_mysql \
-    php7-pdo_pgsql \
-    php7-pdo_sqlite \
-    php7-phar \
-    php7-xml \
-    php7-xmlrpc \
-    php7-zlib \
-    php7-session && \
+    php81-apache2 \
+    php81-bcmath \
+    php81-bz2 \
+    php81-calendar \
+    php81-ctype \
+    php81-curl \
+    php81-dom \
+    php81-gd \
+    php81-iconv \
+    php81-mbstring \
+    php81-mysqlnd \
+    php81-openssl \
+    php81-pdo_mysql \
+    php81-pdo_pgsql \
+    php81-pdo_sqlite \
+    php81-phar \
+    php81-xml \
+    php81-session && \
     rm -f /var/cache/apk/* && \
     mkdir -p /opt/utils && \
     mkdir -p /var/www/html && \
@@ -39,16 +35,16 @@ RUN apk --update \
     sed -i 's/#LoadModule\ deflate_module/LoadModule\ deflate_module/' /etc/apache2/httpd.conf && \
     sed -i 's/#LoadModule\ expires_module/LoadModule\ expires_module/' /etc/apache2/httpd.conf && \
     sed -i 's#KeepAliveTimeout 5#KeepAliveTimeout 100#' /etc/apache2/conf.d/default.conf && \
-    sed -i 's/memory_limit = .*/memory_limit = 128M/' /etc/php7/php.ini && \
-    sed -i 's/post_max_size = .*/post_max_size = 128M/' /etc/php7/php.ini && \
-    sed -i 's/upload_max_filesize = .*/upload_max_filesize = 128M/' /etc/php7/php.ini && \
-    sed -i 's/memory_limit = 128M/memory_limit = 1024M/' /etc/php7/php.ini && \
-    sed -i "s/^;date.timezone =$/date.timezone = \"Europe\/Prague\"/" /etc/php7/php.ini && \
+    sed -i 's/memory_limit = .*/memory_limit = 128M/' /etc/php81/php.ini && \
+    sed -i 's/post_max_size = .*/post_max_size = 128M/' /etc/php81/php.ini && \
+    sed -i 's/upload_max_filesize = .*/upload_max_filesize = 128M/' /etc/php81/php.ini && \
+    sed -i 's/memory_limit = 128M/memory_limit = 1024M/' /etc/php81/php.ini && \
+    sed -i "s/^;date.timezone =$/date.timezone = \"Europe\/Prague\"/" /etc/php81/php.ini && \
     # logging to stdout
     ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
     ln -sf /proc/self/fd/1 /var/log/apache2/error.log && \
     # adminer download
-    curl -L -o /var/www/html/index.php https://github.com/vrana/adminer/releases/download/v4.7.5/adminer-4.7.5.php
+    curl -L -o /var/www/html/index.php https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1.php
 
 EXPOSE 80
 
