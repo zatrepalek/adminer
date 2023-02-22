@@ -2,6 +2,8 @@
 
 This repo contains dockerfile for image with Adminer supporting simultaneous requests (webserver Apache exposed on port 80).
 
+Has in built Adminer SSL extension and suports SSL certificate contents injected via environment variable `DB_SSL_CA_FILE`.
+
 ## Usage
 
 Example docker-compose.yml:

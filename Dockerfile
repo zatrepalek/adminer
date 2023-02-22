@@ -1,8 +1,23 @@
-FROM alpine:3.17
+FROM alpine AS builder
+WORKDIR /var/www/html/
+RUN apk add --update git && \
+    mkdir tmp && \
+    cd tmp && \
+    git clone https://github.com/vrana/adminer.git && \
+    cd adminer && \
+    git fetch --all --tags && \
+    git checkout tags/v4.8.1 && \
+    sed -i 's/git:/https:/g' .gitmodules && \
+    git submodule update --init --recursive && \
+    cd ../.. && \
+    mv tmp/adminer/* . && \
+    rm -rf tmp
+
+FROM alpine
 
 # Setup apache and php
-RUN apk --update \
-    add apache2 \
+RUN apk update && apk upgrade --available && \
+    apk add apache2 \
     curl \
     php81-apache2 \
     php81-bcmath \
@@ -42,9 +57,10 @@ RUN apk --update \
     sed -i "s/^;date.timezone =$/date.timezone = \"Europe\/Prague\"/" /etc/php81/php.ini && \
     # logging to stdout
     ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
-    ln -sf /proc/self/fd/1 /var/log/apache2/error.log && \
-    # adminer download
-    curl -L -o /var/www/html/index.php https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1.php
+    ln -sf /proc/self/fd/1 /var/log/apache2/error.log
+
+COPY --from=builder /var/www/html/ /var/www/html/
+COPY index.php /var/www/html/index.php
 
 EXPOSE 80
 
