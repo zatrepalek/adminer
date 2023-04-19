@@ -32,6 +32,11 @@ function adminer_object()
     return new AdminerCustomization($plugins);
     */
 
+    include_once('plugins/login-password-less.php');
+    return new \AdminerPlugin(array(
+        new \AdminerLoginPasswordLess(password_hash("test", PASSWORD_DEFAULT)),
+    ));
+
     return new AdminerPlugin($plugins);
 }
 

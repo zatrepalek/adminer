@@ -4,6 +4,8 @@ This repo contains dockerfile for image with Adminer supporting simultaneous req
 
 Has in built Adminer SSL extension and suports SSL certificate contents injected via environment variable `DB_SSL_CA_FILE`.
 
+Also it contains [password-less](https://github.com/vrana/adminer/blob/master/plugins/login-password-less.php) plugin to be used with SQL lite (use user and password `test`).
+
 ## Usage
 
 Example docker-compose.yml:
